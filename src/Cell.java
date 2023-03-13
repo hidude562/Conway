@@ -7,6 +7,11 @@ public class Cell {
         alive = Math.random() < 0.5;
         lastModified = 0;
     }
+    public Cell(boolean alive) {
+        // Exactly half of the cells will start out alive
+        this.alive = alive;
+        lastModified = 0;
+    }
     public Cell(Cell otherCell) {
         alive = otherCell.get();
         lastModified = otherCell.getLastModified();
