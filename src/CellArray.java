@@ -1,5 +1,7 @@
+import java.util.Arrays;
+
 public class CellArray {
-    private Cell[][] cells;
+    public Cell[][] cells;
     private static final int sizeX = 50;
     private static final int sizeY = 50;
     private int iter;
@@ -19,9 +21,20 @@ public class CellArray {
             }
         }
     }
+
+    public Cell[][] copyCells() {
+        // Credit to my man Rocrick on stackoverflow https://stackoverflow.com/questions/1564832/how-do-i-do-a-deep-copy-of-a-2d-array-in-java
+
+        final Cell[][] result = new Cell[sizeX][];
+        for (int i = 0; i < sizeX; i++) {
+            result[i] = Arrays.copyOf(cells[i], sizeY);
+        }
+        return result;
+    }
+
     public void nextStep() {
         iter++;
-        Cell[][] tempCells = cells.clone();
+        Cell[][] tempCells = copyCells();
         for(int x0 = 0; x0 < sizeX; x0++) {
             for(int y0 = 0; y0 < sizeY; y0++) {
                 tempCells[x0][y0].incrementTime();
@@ -32,7 +45,7 @@ public class CellArray {
                     tempCells[x0][y0].setAlive();
             }
         }
-        cells = tempCells.clone();
+        cells = tempCells;
     }
     public int getSurroundings(int x0, int y0) {
         int liveCells = (cells[x0][y0].get() ? -1 : 0);
